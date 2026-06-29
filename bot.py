@@ -13,19 +13,9 @@ def handle_message(update, context):
     update.message.reply_text("alive: " + update.message.text)
 
 def main():
-    if not TOKEN:
-        print("NO TOKEN FOUND")
-        return
-
-    updater = Updater(TOKEN, use_context=True)
-    dp = updater.dispatcher
-
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
-
-    print("STARTING POLLING")
-    updater.start_polling(drop_pending_updates=True)
-
-    updater.idle()
-
+    print("HELLO FROM BOT")
+    while True:
+        pass
+        
 if __name__ == "__main__":
     main()
