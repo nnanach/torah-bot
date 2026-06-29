@@ -13,8 +13,9 @@ def handle_message(update, context):
 def build_dispatcher(bot):
     dp = Dispatcher(bot, None, use_context=True)
 
-    dp.add_handler(
-        MessageHandler(Filters.text & ~Filters.command, handle_message)
+dp.add_handler(
+    MessageHandler(Filters.text, handle_message)
+)
     )
 
     return dp
