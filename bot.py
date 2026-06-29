@@ -1,7 +1,2 @@
-print(">>> BOT FILE LOADED <<<")
-
-import time
-
-while True:
-    print("BOT RUNNING")
-    time.sleep(5)
+print("BOT IS STARTING")
+print("TOKEN EXISTS:", bool(TOKEN))
