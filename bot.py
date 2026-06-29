@@ -29,7 +29,8 @@ def main():
 
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
 
-    updater.start_polling()
+    updater.start_polling(drop_pending_updates=True)
+
     updater.idle()
 
 
