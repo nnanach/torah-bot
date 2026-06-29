@@ -2,19 +2,13 @@ import sqlite3
 
 DB = "app.db"
 
+def get_conn():
+    return sqlite3.connect(DB)
+
 def init_db():
-    conn = sqlite3.connect(DB)
+    conn = get_conn()
     cur = conn.cursor()
 
-    # USERS TABLE
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY,
-        plan TEXT DEFAULT 'free'
-    )
-    """)
-
-    # TRADES TABLE
     cur.execute("""
     CREATE TABLE IF NOT EXISTS trades (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +18,7 @@ def init_db():
         entry REAL,
         exit REAL,
         qty REAL,
-        timestamp TEXT
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 

@@ -1,0 +1,1 @@
+DB_PATH = os.getenv("DB_PATH", "/data/app.db")

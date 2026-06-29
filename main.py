@@ -1,7 +1,7 @@
 from flask import Flask, request
 from telegram import Bot, Update
 from telegram.ext import Dispatcher
-
+from app.db import init_db
 from bot import build_dispatcher
 import os
 
@@ -11,6 +11,8 @@ TOKEN = os.getenv("BOT_TOKEN")
 bot = Bot(TOKEN)
 
 dispatcher = build_dispatcher(bot)
+
+init_db()   # ← ALWAYS runs on import (safe, idempotent)
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -25,7 +27,6 @@ def home():
 def set_webhook():
     url = os.getenv("WEBHOOK_URL")
     bot.set_webhook(f"{url}/webhook")
-
 
 if __name__ == "__main__":
     set_webhook()

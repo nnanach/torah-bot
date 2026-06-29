@@ -1,11 +1,13 @@
 from telegram.ext import Dispatcher, MessageHandler, Filters
-from app.search import search
+from app.router import route_message
 
 def handle_message(update, context):
     text = update.message.text
-    results = search(text)
+    user_id = update.effective_user.id
 
-    update.message.reply_text(str(results))
+    reply = route_message(text, user_id)
+
+    update.message.reply_text(reply)
 
 
 def build_dispatcher(bot):
