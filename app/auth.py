@@ -1,12 +1,5 @@
 from telegram.ext import Dispatcher, MessageHandler, Filters
-from app.search import search
-
-def handle_message(update, context):
-    text = update.message.text
-    results = search(text)
-
-    update.message.reply_text(str(results))
-
+from app.handlers import handle_message
 
 def build_dispatcher(bot):
     dp = Dispatcher(bot, None, use_context=True)
