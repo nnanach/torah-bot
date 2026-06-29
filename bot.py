@@ -1,4 +1,12 @@
 import os
+import signal
+import sys
+
+def shutdown(signum, frame):
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, shutdown)
+signal.signal(signal.SIGINT, shutdown)
 from telegram.ext import Updater, MessageHandler, Filters
 from search import search
 
@@ -29,10 +37,10 @@ def main():
 
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
 
+    # CRITICAL: prevents overlap on restart
     updater.start_polling(drop_pending_updates=True)
 
     updater.idle()
-
 
 if __name__ == "__main__":
     main()
