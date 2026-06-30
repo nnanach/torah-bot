@@ -2,7 +2,10 @@ from telegram.ext import Dispatcher, MessageHandler, Filters
 from app.router import route_message
 
 def handle_message(update, context):
-    text = update.message.text
+    if update.message is None:
+        return
+
+    text = update.message.text or ""
     user_id = update.effective_user.id
 
     reply = route_message(text, user_id)
