@@ -5,6 +5,8 @@ from app.db import init_db
 from bot import build_dispatcher
 import os
 
+print("TOKEN PREFIX:", TOKEN[:10] if TOKEN else "NONE")
+
 app = Flask(__name__)
 
 TOKEN = os.getenv("BOT_TOKEN")
