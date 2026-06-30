@@ -1,14 +1,35 @@
+from app.db import get_conn
+
 def handle_trade(text, user_id):
     try:
-        parts = text.split()
-        _, symbol, direction, entry, exit_, qty = parts
+        _, symbol, direction, entry, exit_, qty = text.split()
+
+        conn = get_conn()
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO trades
+            (user_id, symbol, direction, entry, exit, qty)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            user_id,
+            symbol.upper(),
+            direction.upper(),
+            float(entry),
+            float(exit_),
+            float(qty)
+        ))
+
+        conn.commit()
+        conn.close()
 
         return (
-            f"Trade logged:\n"
-            f"{symbol} {direction}\n"
-            f"Entry: {entry} Exit: {exit_}\n"
+            f"Saved trade:\n"
+            f"{symbol.upper()} {direction.upper()}\n"
+            f"Entry: {entry}\n"
+            f"Exit: {exit_}\n"
             f"Qty: {qty}"
         )
 
-    except:
-        return "Format: /trade TSLA CALL 250 260 1"
+    except Exception as e:
+        return f"Trade error: {e}"
