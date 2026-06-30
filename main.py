@@ -1,11 +1,9 @@
+import os
 from flask import Flask, request
 from telegram import Bot, Update
 from telegram.ext import Dispatcher
 from app.db import init_db
 from bot import build_dispatcher
-import os
-
-print("TOKEN PREFIX:", TOKEN[:10] if TOKEN else "NONE")
 
 app = Flask(__name__)
 
@@ -14,7 +12,7 @@ bot = Bot(TOKEN)
 
 dispatcher = build_dispatcher(bot)
 
-init_db()   # ← ALWAYS runs on import (safe, idempotent)
+init_db()
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -30,6 +28,5 @@ def set_webhook():
     url = os.getenv("WEBHOOK_URL")
     bot.set_webhook(f"{url}/webhook")
 
-if __name__ == "__main__":
-    set_webhook()
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+# IMPORTANT: run on import for Railway
+set_webhook()
